@@ -1,0 +1,6 @@
+import sys
+import os
+toolkit_path = r"C:\Users\G993313\Documents\Notebooking\Sanlam\CVM\Sanlam-CVM\Universal Toolkit"
+sys.path.append(os.path.abspath(toolkit_path))
+import tk_essentials
+tk_essentials.desc()
