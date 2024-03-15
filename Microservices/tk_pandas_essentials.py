@@ -1,9 +1,9 @@
 """
-Author: MJ
-Copy DateTime: 15 Friday March 2024 18:55
-Task: Unifi Zindi PDF Lifting Data Science Competition
+@Author: Tebogo MJ
+@Copy DateTime: 15 Friday March 2024 18:55
+@Task: Unifi Zindi PDF Lifting Data Science Competition
 
-Contact: mojela74@gmail.com
+@Contact: mojela74@gmail.com
 """
 
 import numpy as np
@@ -13,6 +13,7 @@ import time
 import re
 import os
 import sys
+from IPython.display import display
 
 #Modelling
 from sklearn.feature_selection import mutual_info_classif
@@ -57,13 +58,13 @@ TODAY = str(datetime.datetime.now()).split(".")[0]
 constants = CONSTANTS()
 
 def desc():
-    functions = ["is_null(item)", "append_to_df(df, row)", "merge(df1, df2, col1, col2, method={‘left’, ‘right’, ‘outer’, ‘inner’, ‘cross’})", "show_all_cols()", "show_all_rows()"
-                 "timestamp()","data_scale(dfx)","data_balance_binary(df, col)","count_nans(df, col)", "count_dups(df, col)","lists_identical(list1, list2)", "mi_classif(X,y)", "search_dfa(item, df, col)", "search_dfb(item, df, col)", 
+    functions = ["is_null(item)", "append_to_df(df, row)", "merge(df1, df2, col1, col2, method={‘left’, ‘right’, ‘outer’, ‘inner’, ‘cross’})", "show_all_cols()", "show_all_rows()","unwrap_row_items()",
+                 "timestamp()", "desc_df(df)","data_scale(dfx)","data_balance_binary(df, col)","count_nans(df, col)", "count_dups(df, col)","lists_identical(list1, list2)", "mi_classif(X,y)", "search_dfa(item, df, col)", "search_dfb(item, df, col)", 
                  "extract_overlap(df, overlap_column, overlap_values)","cut_nulls(df, col_name)", "cut_dups(df, list_columns)","stop()",
                  "strip_string(item, method={spec, specspace, num, alpha})", "update_row(df, index, col, value)","seaborn_dist(df_data, col)",
                  "binary_search_array(item, array)","date_extension()","grade_model_clf(y_true, y_pred, identity)", "join_df_below(df1, df2)", "seaborn_corr_matrix(df_data, annot_size, label_size, outputname)"]
     
-    print("This is a toolkit with " + str(len(functions)) + " universal helper functions.\n")
+    print("This is a description for toolkit script with " + str(len(functions)) + " universal helper functions for data manipulation in pandas, lists and strings.\n")
     print("====")
     for f in functions:
         print(f)
@@ -82,19 +83,22 @@ def show_all_cols():
     
 def show_all_rows():
    pd.options.display.max_rows = None
+   
+def unwrap_row_items():
+   pd.set_option('display.max_colwidth', None)
 
 def cut_nulls(df, col_name):
     print("Before: "+str(df.shape))
     df_result = df.dropna(subset=[col_name]).copy()
     print("After: "+str(df_result.shape))
-    print("Left-Over: "+str(df.shape[0]-df_result.shape[0]))
+    print("Trashed: "+str(df.shape[0]-df_result.shape[0]))
     return df_result
 
 def cut_dups(df, list_columns):
     print("Before: "+str(df.shape))
     df_result = df.drop_duplicates(subset=[list_columns], keep="first").copy()
     print("After: "+str(df_result.shape))
-    print("Left-Over: "+str(df.shape[0]-df_result.shape[0]))
+    print("Trashed: "+str(df.shape[0]-df_result.shape[0]))
     return df_result
 
 def count_nans(df, col):
@@ -311,7 +315,7 @@ def binary_search_array(item, array):
         return -1
     
 def stop():
-    raise Exception("Message: Code has been stopped on purpose via tk_essentials.")
+    raise Exception("Message: Code has been stopped on purpose via tk_pandas_essentials.")
     
 def lists_identical(list1, list2):
     len1 = len(list1)
@@ -323,7 +327,14 @@ def lists_identical(list1, list2):
     if len1 == len2 and compare1 == compare2:
         return True
     else:
-        return False                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+        return False 
+
+def desc_df(df):
+    print("Shape: " + str(df.shape))
+    print("Columns: " + str(df.columns))
+    print("\n")
+    display(df.head())
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
 
 def date_extension():
     return TODAY.split(" ")[0].replace("-", "")
