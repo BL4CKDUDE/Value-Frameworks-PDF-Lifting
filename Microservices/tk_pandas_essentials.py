@@ -195,7 +195,7 @@ def seaborn_corr_matrix(df_data, annot_size, label_size, outputname):
     
 def search_dfa(item, df, col):
     item = str(item)
-    result = df.loc[np.where((df[col].astype(str).values == item))]
+    result = df.loc[np.where((df[col].astype(str).str.lower() == item.lower()))]
     if constants.SEARCH_MSG == 1:
         print("Message: SEARCH_DFB (slightly slower than SEARCH_DFA): Make sure the item you are searching for is of type STRING and the col is of datatype OBJECT(string)")
         constants.set_search_msg(0) 
@@ -239,6 +239,7 @@ def grade_model_clf(y_true, y_pred, identity):
     return acc, f1, mse
     
 def data_scale(dfx):
+    # scales input data [-1,1]
     min_max_scaler = MinMaxScaler()
     standard_scaler = StandardScaler()
     dfx_min_max = min_max_scaler.fit_transform(dfx)
@@ -248,6 +249,7 @@ def data_scale(dfx):
     return dfx_min_max, dfx_standard
     
 def data_balance_binary(df, col):
+    # distribution of binary data
     classes = list(set(df[col]))
     df[col] = df[col].astype(str).copy()
     if len(classes) == 2:
